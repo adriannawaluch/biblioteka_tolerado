@@ -20,7 +20,7 @@ public class Author {
             joinColumns = @JoinColumn(name = "authorID"),
             inverseJoinColumns = @JoinColumn(name = "bookID")
     )
-    private Set<Book> books = new HashSet<>();
+    private Set<Books> books = new HashSet<>();
 
     //Kontruktory gettery i settery
     public Author(){}
@@ -47,17 +47,17 @@ public class Author {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    public Set<Book> getBooks() {return books;}
-    public void setBooks(Set<Book> books) { this.books = books;}
+    public Set<Books> getBooks() {return books;}
+    public void setBooks(Set<Books> books) { this.books = books;}
 
-    public void addBook(Book book) {
-        books.add(book);
-        book.getAuthors().add(this);
+    public void addBook(Books books) {
+        this.books.add(books);
+        books.getAuthors().add(this);
     }
 
-    public void removeBook(Book book) {
-        books.remove(book);
-        book.getAuthors().remove(this);
+    public void removeBook(Books books) {
+        this.books.remove(books);
+        books.getAuthors().remove(this);
     }
 
 }

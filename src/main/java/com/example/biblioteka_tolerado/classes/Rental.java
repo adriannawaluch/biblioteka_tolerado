@@ -15,7 +15,7 @@ public class Rental {
     private User user;
     @ManyToOne
     @JoinColumn(name = "bookID")
-    private Book book;
+    private Books books;
 
     @Column(name = "loan_date")
     private Date loanDate;
@@ -28,10 +28,10 @@ public class Rental {
 
     public Rental(){
     }
-    public Rental(User user, Book book){
+    public Rental(User user, Books books){
         //TODO this.loanDate = dzisiejsza data
         this.user = user;
-        this.book = book;
+        this.books = books;
         this.returned = false;
     }
 
@@ -51,12 +51,12 @@ public class Rental {
         this.user = user;
     }
 
-    public Book getBook() {
-        return book;
+    public Books getBook() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBook(Books books) {
+        this.books = books;
     }
 
     public Date getLoanDate() {

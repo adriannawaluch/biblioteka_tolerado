@@ -1,5 +1,6 @@
 package com.example.biblioteka_tolerado.services_interfaces;
-import com.example.biblioteka_tolerado.classes.Book;
+import com.example.biblioteka_tolerado.classes.Books;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -11,24 +12,27 @@ public class BookServices {
     public BookServices(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
-    public List<Book> getAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+    @Transactional
+    public Books addBook(String title, String language, int availability ) {
+        if (title == null || title.isEmpty() || language == null || language.isEmpty() || availability < 0) {
+            throw new IllegalArgumentException("Invalid input data for adding a book");
+        }
+        Books books = new Books();
+        books.setTitle(title);
+        books.setLanguage(language);
+        books.setAvailability(availability);
+        return bookRepository.save(books);
     }
-
-    public Book addBook(String title, String language, int availability ) {
-        Book book = new Book();
-        book.setTitle(title);
-        book.setLanguage(language);
-        book.setAvailability(availability);
-        return bookRepository.save(book);
-    }
-
-    public void deleteBook(Long id) {
+    @Transactional
+    public void deleteBook(int id) {
         bookRepository.deleteById(id);
     }
 
-    public List<Book> findAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+    public List<Books> findAllBooks() {
+        return bookRepository.findAll();
     }
 
+    public List<Books> findBooksByBookId(int id){
+        return bookRepository.findBooksByBookId(id);
+    }
 }

@@ -1,20 +1,28 @@
 package com.example.biblioteka_tolerado.classes;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnTransformer;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "Books", schema="dbo")
-public class Book {
+@Entity(name = "Books")
+@Table(name = "Books")
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bookID")
-    private Long id;
-    @Column(name = "title")
+    @Column(name="book_id")
+    @ColumnTransformer(read = "bookID", write = "bookID")
+    private int bookId;
+
+    @Column(name="title")
+    @ColumnTransformer(read = "title", write = "title")
     private String title;
-    @Column(name = "language")
+
+    @Column(name="language")
+    @ColumnTransformer(read = "language", write = "language")
     private String language;
-    @Column(name = "availability")
+    @Column(name="availability")
+    @ColumnTransformer(read = "availability", write = "availability")
     private int availability;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
@@ -24,28 +32,28 @@ public class Book {
     )
     private Set<Author> authors = new HashSet<>();
     // Konstruktory, gettery i setter
-    public Book() {
+    public Books() {
     }
-    public Book(String title, String language) {
+    public Books(String title, String language) {
         this.title = title;
         this.language = language;
     }
-    public Book(String title, String language, Set<Author> authors) {
+    public Books(String title, String language, Set<Author> authors) {
         this.title = title;
         this.language = language;
         this.authors = authors;
     }
-    public Book(String title, String language, Set<Author> authors, int availability) {
+    public Books(String title, String language, Set<Author> authors, int availability) {
         this.title = title;
         this.language = language;
         this.authors = authors;
         this.availability = availability;
     }
-    public Long getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setBookId(int id) {
+        this.bookId = id;
     }
     public String getTitle() {
         return title;
@@ -92,7 +100,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id='" + id + '\'' +
+                "id='" + bookId + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + authors + '\'' +
                 // Include other fields as needed
