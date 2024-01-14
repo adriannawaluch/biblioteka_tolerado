@@ -6,7 +6,7 @@ import java.util.List;
 
 @Service
 public class BookServices {
-    private final BookRepository bookRepository;
+    private BookRepository bookRepository;
     @Autowired
     public BookServices(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
