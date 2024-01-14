@@ -11,18 +11,14 @@ public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="book_id")
-    @ColumnTransformer(read = "bookID", write = "bookID")
     private int bookId;
 
     @Column(name="title")
-    @ColumnTransformer(read = "title", write = "title")
     private String title;
 
     @Column(name="language")
-    @ColumnTransformer(read = "language", write = "language")
     private String language;
     @Column(name="availability")
-    @ColumnTransformer(read = "availability", write = "availability")
     private int availability;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(

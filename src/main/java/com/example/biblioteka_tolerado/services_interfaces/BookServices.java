@@ -1,4 +1,5 @@
 package com.example.biblioteka_tolerado.services_interfaces;
+import org.springframework.lang.NonNull;
 import com.example.biblioteka_tolerado.classes.Books;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class BookServices {
     public void deleteBook(int id) {
         bookRepository.deleteById(id);
     }
-
+    @NonNull
     public List<Books> findAllBooks() {
         return bookRepository.findAll();
     }
