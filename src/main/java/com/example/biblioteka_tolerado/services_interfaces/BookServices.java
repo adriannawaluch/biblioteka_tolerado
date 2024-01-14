@@ -3,18 +3,14 @@ import com.example.biblioteka_tolerado.classes.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class BookServices {
-    @Autowired
     private final BookRepository bookRepository;
-
+    @Autowired
     public BookServices(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
-
     public List<Book> getAllBooks() {
         return (List<Book>) bookRepository.findAll();
     }
