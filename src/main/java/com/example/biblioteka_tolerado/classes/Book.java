@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Books")
+@Table(name = "Books", schema="dbo")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
