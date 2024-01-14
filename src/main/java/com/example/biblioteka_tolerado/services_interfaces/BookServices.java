@@ -31,7 +31,4 @@ public class BookServices {
         return (List<Book>) bookRepository.findAll();
     }
 
-    public Book findBookById(Long bookId) {
-        return null;
-    }
 }
