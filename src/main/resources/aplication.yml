@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=biblioteka_tolerado;user=adriannawaluch;password=0000admin123;encrypt=true;trustServerCertificate=true;
+    username: adriannawaluch
+    password: 0000admin123
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  security:
+    user:
+      name: admin
+      password: admin
+    basic:
+      enabled: true
