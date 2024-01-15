@@ -20,7 +20,13 @@ public class PasswordController {
     }
 
     @GetMapping("/get")
-    public String getPassword(@RequestParam Long userID) {
-        return passwordService.getPasswordByUserID(userID);
+    public String getPassword(@RequestParam Long userId) {
+        return passwordService.getPasswordByUserID(userId);
     }
+
+    @GetMapping("/change")
+    public void changePassword(@RequestParam int userId, String oldPassword, String newPassword) {
+        passwordService.updatePassword((long)userId, oldPassword, newPassword);
+    }
+
 }

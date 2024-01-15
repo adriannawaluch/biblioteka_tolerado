@@ -33,7 +33,8 @@ public class BookServices {
         return bookRepository.findAll();
     }
 
-    public List<Books> findBooksByBookId(int id){
+    public Books findBooksByBookId(int id){
         return bookRepository.findBooksByBookId(id);
     }
+
 }

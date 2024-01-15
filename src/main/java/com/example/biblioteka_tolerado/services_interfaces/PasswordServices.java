@@ -4,6 +4,8 @@ import com.example.biblioteka_tolerado.classes.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 
 @Service
 public class PasswordServices {
@@ -19,14 +21,13 @@ public class PasswordServices {
         passwordRepository.save(newPassword);
     }
 
-    public void updatePassword(Long userId, String newPassword) {
+    public void updatePassword(Long userId, String oldPassword, String newPassword) {
         Password password = passwordRepository.findById(userId).orElse(null);
-        if (password != null) {
+        if (password != null && Objects.equals(password.getPassword(), oldPassword)) {
             password.setPassword(newPassword);
             passwordRepository.save(password);
         } else {
-            // Obsłuż sytuację, gdy nie ma hasła dla danego użytkownika
-            // Możesz rzucić wyjątek lub zaimplementować odpowiednią logikę obsługi
+            System.out.println("niepoprawne stare haslo");
         }
     }
 //czy to w ogole ma sens

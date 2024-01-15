@@ -10,6 +10,7 @@ import java.util.List;
 @RequestMapping(value="/api/books", method = RequestMethod.GET)
 public class BookController {
     private BookServices bookService;
+
     @Autowired
     public BookController(BookServices bookService) {
         this.bookService = bookService;
@@ -25,7 +26,7 @@ public class BookController {
         return bookService.findAllBooks();
     }
     @GetMapping("/by_id")
-    public List<Books> findBooksById(@RequestParam Integer bookId) {
+    public Books findBooksById(@RequestParam Integer bookId) {
         return bookService.findBooksByBookId(bookId);
     }
 
