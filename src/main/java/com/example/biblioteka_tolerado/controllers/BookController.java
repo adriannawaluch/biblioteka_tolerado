@@ -18,10 +18,12 @@ public class BookController {
 
     @PostMapping("/addBook")
     public Books addBook(@RequestParam String title, @RequestParam String language, @RequestParam Integer availability) {
+        System.out.println(title + language + availability);
         return bookService.addBook(title, language, availability);
     }
 
     @GetMapping("/all")
+    @ResponseBody
     public List<Books> findAllBooks() {
         return bookService.findAllBooks();
     }
@@ -30,8 +32,8 @@ public class BookController {
         return bookService.findBooksByBookId(bookId);
     }
 
-    @DeleteMapping("/deleteBook")
-    public void deleteBook(@RequestParam int bookId) {
-        bookService.deleteBook(bookId);
+    @PostMapping("/deleteBook")
+    public void deleteBook(@RequestBody Books books) {
+        bookService.deleteBook(books.getBookId());
     }
 }
