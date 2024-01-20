@@ -26,11 +26,13 @@ public class RentalController {
     }
 
     // Endpoint do wypożyczania książki
-    @GetMapping("/rent")
-    public ResponseEntity<Rental> rentBook(@RequestParam int userId, @RequestParam int bookId) {
+    @PostMapping("/rent")
+    public ResponseEntity<Rental> rentBook(@RequestParam int bookId) {
+        int userId = 1;
         User user = userService.findUserById((long)userId);
         Books books = bookService.findBooksByBookId(bookId);
-
+        System.out.println(user);
+        System.out.println(books);
         if (user != null && books != null) {
             Rental rentedBook = rentalService.rentBook(user, books);
             System.out.println("udalo sie rent");

@@ -75,7 +75,7 @@ public class Books {
         this.availability++;
     }
 
-    public void decreaseAvailability() { this.availability--; }
+    public void decreaseAvailability() { this.availability = this.availability-1; }
 
     public Set<Author> getAuthors() {
         return authors;
