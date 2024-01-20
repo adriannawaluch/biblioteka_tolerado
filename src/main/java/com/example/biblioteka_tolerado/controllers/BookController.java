@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value="/api/books", method = RequestMethod.GET)
+@RequestMapping(value = "/api/books", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class BookController {
     private BookServices bookService;
 
@@ -32,8 +32,8 @@ public class BookController {
         return bookService.findBooksByBookId(bookId);
     }
 
-    @PostMapping("/deleteBook")
-    public void deleteBook(@RequestBody Books books) {
-        bookService.deleteBook(books.getBookId());
+    @DeleteMapping("/deleteBook")
+    public void deleteBook(@RequestParam int bookId) {
+        bookService.deleteBook(bookId);
     }
 }
