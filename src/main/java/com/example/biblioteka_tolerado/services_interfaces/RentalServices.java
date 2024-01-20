@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 
+import java.util.List;
+
 @Service
 public class RentalServices {
     private final RentalRepository rentalRepository;
@@ -37,21 +39,21 @@ public class RentalServices {
 
     // Zwracanie książek, aktualizacja statusu
     public void returnBook(User user, Long loanID, Books books) {
-//        Rental rental = rentalRepository.findByUserAndLoanID(user, loanID);
-        System.out.println("wzrociles ksiazke");
-//        if (rental != null && !rental.isReturned()) {
-//            books.increaseAvailability();
-//            rental.setReturned(true);
-//            rentalRepository.save(rental);
-//            bookRepository.save(books);
-//        } else {
-//            // Obsługa sytuacji, gdy wypożyczenie nie istnieje lub zostało już zwrócone
-//            throw new RuntimeException("Wypożyczenie nie znalezione lub już zwrócone");
-//        }
+        Rental rental = rentalRepository.findByUserAndLoanID(user, loanID);
+
+        if (rental != null && !rental.isReturned()) {
+            books.increaseAvailability();
+            rental.setReturned(true);
+            rentalRepository.save(rental);
+            bookRepository.save(books);
+            System.out.println("Książka została zwrócona.");
+        } else {
+            System.out.println("Wypożyczenie nie znalezione lub już zwrócone.");
+        }
     }
 
     // Pokaż wypożyczenia dla danego użytkownika
-    public Rental showRentalsByUserID(Long userId) {
+    public List<Rental> showRentalsByUserID(Long userId) {
         return rentalRepository.findByUser_UserId(userId);
     }
 

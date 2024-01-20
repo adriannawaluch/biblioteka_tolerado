@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rental")
 public class RentalController {
@@ -43,40 +45,30 @@ public class RentalController {
     }
 
     // Endpoint do zwracania książki
-    @GetMapping("/return")
-    public ResponseEntity<String> returnBook(@RequestParam Long userId, @RequestParam Long loanId, @RequestParam int bookId) {
-        User user = userService.findUserById(userId);
+    @PostMapping("/return")
+    public void returnBook(@RequestParam(required = false) Integer userId, @RequestParam Long loanId, @RequestParam int bookId) {
+        userId=1;
+        User user = userService.findUserById((long)userId);
         Books books = bookService.findBooksByBookId(bookId);
         System.out.println(userId + bookId);
+
         if (user != null && books != null) {
             rentalService.returnBook(user, loanId, books);
-            return new ResponseEntity<>("Book returned successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User or books not found", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    // Endpoint do pobierania wypożyczeń dla konkretnej książki
-    @GetMapping("/book/{bookId}")
-    public ResponseEntity<Rental> showRentalsByBookID(@PathVariable int bookId) {
-        if (bookId != 0) {
-            Rental rentals = rentalService.showRentalsByBookID(bookId);
-            System.out.println("udalo sie po book id");
-            return new ResponseEntity<>(rentals, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            System.out.println("nie udalo sie");
         }
     }
 
     // Endpoint do pobierania wypożyczeń dla konkretnego użytkownika
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Rental> showRentalsByUserID(@PathVariable int userId) {
+    @GetMapping("/user")
+    @ResponseBody
+    public List<Rental> showRentalsByUserID(@RequestParam(required = false) Integer userId) {
+        userId =1;
         if (userId != 0) {
-            Rental rentals = rentalService.showRentalsByUserID((long)userId);
             System.out.println("udalo sie po user id");
-            return new ResponseEntity<>(rentals, HttpStatus.OK);
+            return rentalService.showRentalsByUserID((long)userId);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 }
