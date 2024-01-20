@@ -2,13 +2,19 @@ package com.example.biblioteka_tolerado.services_interfaces;
 import com.example.biblioteka_tolerado.classes.Books;
 import com.example.biblioteka_tolerado.classes.Rental;
 import com.example.biblioteka_tolerado.classes.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 
 @Service
 public class RentalServices {
     private final RentalRepository rentalRepository;
     private final BookRepository bookRepository; // Zakładam, że masz BookRepository do zarządzania książkami
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public RentalServices(RentalRepository rentalRepository, BookRepository bookRepository) {
@@ -17,9 +23,15 @@ public class RentalServices {
     }
 
     // Nowe wypożyczenie
+    @Transactional
     public Rental rentBook(User user, Books books) {
+        if (!entityManager.contains(books)) {
+            // Jeśli nie jest zarządzany, możesz go dołączyć do kontekstu JPA
+            books = entityManager.merge(books);
+        }
         Rental newRent = new Rental(user, books);
         books.decreaseAvailability();
+        System.out.println(books.getAvailability());
         return rentalRepository.save(newRent);
     }
 

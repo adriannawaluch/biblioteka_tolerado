@@ -18,20 +18,14 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(
+    public User createUser(
             @RequestParam String user_login,
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String email,
             @RequestParam String password) {
 
-        User user = new User(user_login, firstName, lastName, email);
-        Password passwordEntity = new Password(user, password);
-        passwordEntity.setUser(user);
-
-        userServices.createUser(user.getUserLogin(),user.getFirstName(),user.getLastName(), user.getEmail(), passwordEntity.getPassword());
-
-        return ResponseEntity.ok("User created successfully.");
+        return userServices.createUser(user_login, firstName, lastName, email, password);
     }
 
     @PostMapping("/login")

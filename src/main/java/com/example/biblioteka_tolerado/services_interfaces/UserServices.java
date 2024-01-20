@@ -31,10 +31,7 @@ public class UserServices {
         user.setPassword(password);
 
         // Zapis do bazy danych
-        userRepository.save(user);
-
-        // Zwracanie stworzonego użytkownika
-        return user;
+        return userRepository.save(user);
     }
     //uwierzytelnianie
     public boolean login(String givenUserName, String givenPassword){
@@ -42,7 +39,7 @@ public class UserServices {
         Password password = new Password();
         password.setUser(user);
         password.setPassword(givenPassword);
-        return user != null && user.getPassword()==password;
+        return user != null && user.getPassword().getPassword().equals(password.getPassword());
     }
     //usuwanie uzytkownika
     @Transactional
