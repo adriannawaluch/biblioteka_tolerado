@@ -17,9 +17,8 @@ public class BookController {
     }
 
     @PostMapping("/addBook")
-    public Books addBook(@RequestParam String title, @RequestParam String language, @RequestParam Integer availability) {
-        System.out.println(title + language + availability);
-        return bookService.addBook(title, language, availability);
+    public Books addBook(@RequestParam String title, @RequestParam String language,  @RequestParam String first_name, @RequestParam String last_name) {
+        return bookService.addBook(title, language, first_name, last_name);
     }
 
     @GetMapping("/all")

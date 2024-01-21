@@ -3,49 +3,43 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Authors")
 @Table(name = "Authors")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "authorID")
-    private int id;
+    @Column(name = "authorID", unique = true)
+    private int authorId;
     @Column(name = "first_name")
-    private String name;
+    private String firstName;
     @Column(name = "last_name")
-    private String lastname;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "BooksAuthors",
-            joinColumns = @JoinColumn(name = "authorID"),
-            inverseJoinColumns = @JoinColumn(name = "bookID")
-    )
+    private String lastName;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, mappedBy = "authors")
     private Set<Books> books = new HashSet<>();
 
     //Kontruktory gettery i settery
     public Author(){}
-    public Author(int id, String name, String lastname){
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
+    public Author(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setAuthorId(int id) {
+        this.authorId = id;
     }
-    public int getId() {
-        return id;
+    public int getAuthorId() {
+        return authorId;
     }
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
     public Set<Books> getBooks() {return books;}
     public void setBooks(Set<Books> books) { this.books = books;}

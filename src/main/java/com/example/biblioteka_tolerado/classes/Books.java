@@ -10,7 +10,7 @@ import java.util.Set;
 public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="book_id")
+    @Column(name="book_id", unique = true)
     private int bookId;
 
     @Column(name="title")
@@ -20,13 +20,16 @@ public class Books {
     private String language;
     @Column(name="availability")
     private int availability;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "BooksAuthors",
-            joinColumns = @JoinColumn(name = "bookID"),
-            inverseJoinColumns = @JoinColumn(name = "authorID")
+            joinColumns = @JoinColumn(name = "bookId"),
+            inverseJoinColumns = @JoinColumn(name = "authorId"),
+            uniqueConstraints = @UniqueConstraint(name = "UC_BooksAuthors_Book", columnNames = {"bookId", "authorId"})
     )
     private Set<Author> authors = new HashSet<>();
+
+
     // Konstruktory, gettery i setter
     public Books() {
     }
@@ -86,9 +89,10 @@ public class Books {
     }
 
     public void addAuthor(Author author) {
-        authors.add(author);
+        this.authors.add(author);
         author.getBooks().add(this);
     }
+
     public void removeAuthor(Author author) {
         authors.remove(author);
         author.getBooks().remove(this);
