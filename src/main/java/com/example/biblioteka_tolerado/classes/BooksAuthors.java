@@ -5,15 +5,15 @@ import jakarta.persistence.*;
 import java.awt.print.Book;
 
 @Entity
-@Table(name = "BooksAuthors")
+@Table(name = "books_authors")
 public class BooksAuthors {
     @Id
     @ManyToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id")
     private Books book;
     @Id
     @ManyToOne
-    @JoinColumn(name = "authorId")
+    @JoinColumn(name = "author_id")
     private Author author;
 
     public BooksAuthors(Books book, Author author){

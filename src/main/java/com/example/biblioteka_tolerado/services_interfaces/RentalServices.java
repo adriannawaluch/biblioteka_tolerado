@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,9 +32,15 @@ public class RentalServices {
             // Jeśli nie jest zarządzany, możesz go dołączyć do kontekstu JPA
             books = entityManager.merge(books);
         }
+
+        LocalDate currentDate = LocalDate.now(); // Pobierz dzisiejszą datę
+
         Rental newRent = new Rental(user, books);
+        newRent.setLoanDate(currentDate); // Ustaw datę wypożyczenia na dzisiejszą datę
+
         books.decreaseAvailability();
         System.out.println(books.getAvailability());
+
         return rentalRepository.save(newRent);
     }
 
@@ -43,7 +50,12 @@ public class RentalServices {
 
         if (rental != null && !rental.isReturned()) {
             books.increaseAvailability();
+
+            LocalDate todayDate = LocalDate.now(); // Pobierz dzisiejszą datę
+
             rental.setReturned(true);
+            rental.setReturnDate(todayDate); // Ustaw datę zwrotu na dzisiejszą datę
+
             rentalRepository.save(rental);
             bookRepository.save(books);
             System.out.println("Książka została zwrócona.");

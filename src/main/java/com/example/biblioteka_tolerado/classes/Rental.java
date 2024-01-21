@@ -1,6 +1,7 @@
 package com.example.biblioteka_tolerado.classes;
 import jakarta.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Rental")
@@ -18,10 +19,10 @@ public class Rental {
     private Books books;
 
     @Column(name = "loan_date")
-    private Date loanDate;
+    private LocalDate loanDate;
 
     @Column(name = "return_date")
-    private Date returnDate;
+    private LocalDate returnDate;
 
     @Column(name = "returned")
     private boolean returned;
@@ -59,19 +60,19 @@ public class Rental {
         this.books = books;
     }
 
-    public Date getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
