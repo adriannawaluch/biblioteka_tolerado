@@ -29,7 +29,6 @@ public class RentalServices {
     @Transactional
     public Rental rentBook(User user, Books books) {
         if (!entityManager.contains(books)) {
-            // Jeśli nie jest zarządzany, możesz go dołączyć do kontekstu JPA
             books = entityManager.merge(books);
         }
 

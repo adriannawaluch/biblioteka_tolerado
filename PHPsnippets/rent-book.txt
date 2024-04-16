@@ -1,0 +1,24 @@
+<?php
+if (isset($_POST['borrowBookId'])){
+    $bookId = $_POST['IdBook'];
+    $data_to_send = array(
+        'bookId' => $bookId,
+    );
+    // Wysyłanie danych do API w Javie
+    $api_url = 'http://localhost:8080/rental/rent';
+    $response = wp_remote_post($api_url, array(
+        'body' => $data_to_send, // Zmiana: Wysyłanie danych jako parametry POST
+        'headers' => array('Content-Type' => 'application/x-www-form-urlencoded'),
+   ));
+
+    // Sprawdź, czy zapytanie zakończyło się sukcesem
+    if (is_wp_error($response)) {
+        echo '<p style="color: red;">Wystąpił błąd podczas wysyłania danych do API.</p>';
+    } else {
+        // W tym miejscu możesz przetworzyć odpowiedź od API, jeśli jest to konieczne
+        $api_response_body = wp_remote_retrieve_body($response);
+        // ...
+        echo '<p style="color: green;">Książka wypozyczona z sukcesem!</p>';
+    }
+}
+?>

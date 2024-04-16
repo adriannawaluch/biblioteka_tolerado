@@ -1,0 +1,39 @@
+<?php
+// Pobierz dane książek
+$books_data = do_shortcode('[wpgetapi_endpoint api_id="allBook_1" endpoint_id="AllBooks" debug="false"]');
+if ($books_data) {
+    $books = json_decode($books_data, true);
+    if (!empty($books)) {
+        echo '<form method="post" >';
+        echo '<table>';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th></th>'; // Dodane pole na radio button
+        echo '<th>Id</th>';
+        echo '<th>Tytuł</th>';
+        echo '<th>Język</th>';
+        echo '<th>Dostępność</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+        foreach ($books as $book) {
+            echo '<tr>';
+            echo '<td><input type="radio" name="IdBook" value="' . $book['bookId'] . '"></td>';
+            echo '<td>' . $book['bookId'] . '</td>';
+            echo '<td>' . $book['title'] . '</td>';
+            echo '<td>' . $book['language'] . '</td>';
+            echo '<td>' . $book['availability'] . '</td>';
+            echo '</tr>';
+        }
+        echo '</tbody>';
+        echo '</table>';
+        echo '<button type="submit" name="deleteBookId" onclick="return confirm(\'Czy na pewno chcesz usunąć zaznaczoną książkę?\')">Usuń zaznaczoną</button>';
+        echo '<button type="submit" name="borrowBookId">Wypożycz zaznaczoną</button>';
+        echo '</form>';
+    } else {
+        echo 'Brak dostępnych danych.';
+    }
+} else {
+    echo 'Brak dostępnych danych.';
+}
+?>
